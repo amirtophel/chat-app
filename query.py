@@ -4,7 +4,7 @@ from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
 from langchain.chains import ConversationalRetrievalChain
 from langchain.text_splitter import CharacterTextSplitter
-
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 def load_documents(directory):
     documents = []
     for file in os.listdir(directory):
