@@ -5,7 +5,7 @@ from query import load_documents, setup_conversational_chain
 
 
 load_dotenv()
-
+openai.api_key = st.secrets["OPENAI_API_KEY"]
 @st.cache_resource(show_spinner="Loading model and documents...")
 def init_bot():
     docs = load_documents("data")
