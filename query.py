@@ -1,21 +1,13 @@
 import os
-import re
 import openai
 import streamlit as st
-
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
+from langchain.chains import ConversationalRetrievalChain
 from langchain.text_splitter import CharacterTextSplitter
-
-from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from langchain.schema.runnable import RunnableMap
-from langchain.memory import ConversationBufferMemory
-
-# Load OpenAI key from secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-# Custom prompt template as seen in the image
 prompt_template = """
 As an AI tutor, your role is to provide personalised, engaging, and supportive learning experiences. Keep the following qualities in mind:
 
@@ -36,7 +28,6 @@ As an AI tutor, your role is to provide personalised, engaging, and supportive l
 {question}
 """
 
-# Load and split documents
 def load_documents(directory):
     documents = []
     for file in os.listdir(directory):
@@ -55,44 +46,14 @@ def load_documents(directory):
             print(f"Error loading {file}: {e}")
     return documents
 
-# Set up retriever and QA chain
 def setup_conversational_chain(documents):
     text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=10)
     split_docs = text_splitter.split_documents(documents)
     vectordb = FAISS.from_documents(split_docs, embedding=OpenAIEmbeddings())
-
-    memory = ConversationBufferMemory(return_messages=True)
-
-    llm = ChatOpenAI(temperature=0.1, model_name="gpt-3.5-turbo-0125")
-
-    prompt = ChatPromptTemplate.from_template(prompt_template)
-
-    chain = RunnableMap({
-        "question": lambda x: x["question"],
-        "context": lambda x: vectordb.similarity_search(x["question"], k=1)
-    }) | prompt | llm
-
-    return chain
-
-# Init chain and history
-pdf_qa = setup_conversational_chain(load_documents("data"))
-chat_history = []
-
-# Query function
-def query(prompt):
-    global chat_history
-    response = pdf_qa.invoke({"question": prompt})
-
-    # ✅ Correct way to get the text from AIMessage object
-    answer = response.content if hasattr(response, "content") else str(response)
-
-    # Clean up math formatting
-    answer = re.sub(r"\[\s*([^\[\]]+?)\s*\]", r"$$\1$$", answer)
-    answer = answer.replace("\\(", "$").replace("\\)", "$")
-
-    chat_history.append((prompt, answer))
-    if len(chat_history) > 5:
-        chat_history = chat_history[-5:]
-
-    return {"answer": answer}
-
+    pdf_qa = ConversationalRetrievalChain.from_llm(
+        ChatOpenAI(temperature=.1, model_name="gpt-4-1106-preview"),
+        vectordb.as_retriever(search_kwargs={'k': 1}),
+        return_source_documents=True,
+        verbose=False
+    )
+    return pdf_qa
