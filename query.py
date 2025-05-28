@@ -1,4 +1,5 @@
 import os
+import openai
 import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
