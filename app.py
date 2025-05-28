@@ -8,7 +8,7 @@ from query import load_documents, setup_conversational_chain
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Streamlit page config
-st.set_page_config(page_title="Geotechnical Engineering Tutor", layout="wide")
+st.set_page_config(page_title="Geotechnical Engineering Tutor")
 st.title("📄 Welcome, I am your Geotechnical Engineering Tutor! How may I help you?")
 
 # Load and cache the QA chain
