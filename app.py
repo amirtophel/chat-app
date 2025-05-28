@@ -1,11 +1,10 @@
 import os
-import openai
 import streamlit as st
 from dotenv import load_dotenv
 from query import load_documents, setup_conversational_chain
 
 # Load OpenAI API key securely
-load_dotenv()
+#load_dotenv()
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 # Streamlit page config
