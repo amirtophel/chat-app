@@ -49,5 +49,5 @@ if st.session_state.chat_history:
     st.subheader("Chat History")
     for user_input, bot_reply in reversed(st.session_state.chat_history[-10:]):
         st.markdown(f"**🧑‍💬 You:** {user_input}")
-        st.markdown(f"**🤖 Bot:** {bot_reply}")
+        st.markdown(f"**🤖 Tutor:** {bot_reply}")
         st.markdown("---")
