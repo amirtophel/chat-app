@@ -26,12 +26,12 @@ def load_documents(directory):
     return documents
 
 def setup_conversational_chain(documents):
-    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=10)
+    text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=10)
     split_docs = text_splitter.split_documents(documents)
     vectordb = FAISS.from_documents(split_docs, embedding=OpenAIEmbeddings())
     pdf_qa = ConversationalRetrievalChain.from_llm(
         ChatOpenAI(temperature=.1, model_name="gpt-4-1106-preview"),
-        vectordb.as_retriever(search_kwargs={'k': 10}),
+        vectordb.as_retriever(search_kwargs={'k': 1}),
         return_source_documents=True,
         verbose=False
     )
