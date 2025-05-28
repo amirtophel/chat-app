@@ -46,14 +46,22 @@ def load_documents(directory):
             print(f"Error loading {file}: {e}")
     return documents
 
+from langchain.prompts import ChatPromptTemplate
+
 def setup_conversational_chain(documents):
     text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=10)
     split_docs = text_splitter.split_documents(documents)
     vectordb = FAISS.from_documents(split_docs, embedding=OpenAIEmbeddings())
+
+    # Define the ChatPromptTemplate from your string template
+    prompt = ChatPromptTemplate.from_template(prompt_template)
+
     pdf_qa = ConversationalRetrievalChain.from_llm(
-        ChatOpenAI(temperature=.1, model_name="gpt-3.5-turbo-0125"),prompt=prompt_template,
-        vectordb.as_retriever(search_kwargs={'k': 1}),
+        ChatOpenAI(temperature=0.1, model_name="gpt-3.5-turbo-0125"),
+        retriever=vectordb.as_retriever(search_kwargs={'k': 1}),
         return_source_documents=True,
-        verbose=False
+        verbose=False,
+        prompt=prompt  # ✅ Now passing a valid ChatPromptTemplate
     )
     return pdf_qa
+
