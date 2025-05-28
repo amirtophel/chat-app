@@ -1,4 +1,5 @@
 import os
+import openai
 import streamlit as st
 from dotenv import load_dotenv
 from query import load_documents, setup_conversational_chain
