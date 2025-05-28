@@ -14,8 +14,8 @@ def init_bot():
     return chain
 
 # App config
-st.set_page_config(page_title="Document Chatbot", layout="wide")
-st.title("📄 Document Q&A Chatbot")
+st.set_page_config(page_title="Geotechnical Engineering Tutor", layout="wide")
+st.title("📄 Welcome! How may I help you?")
 
 # Session state setup
 if "chat_history" not in st.session_state:
