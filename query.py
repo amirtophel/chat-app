@@ -51,7 +51,7 @@ def setup_conversational_chain(documents):
     split_docs = text_splitter.split_documents(documents)
     vectordb = FAISS.from_documents(split_docs, embedding=OpenAIEmbeddings())
     pdf_qa = ConversationalRetrievalChain.from_llm(
-        ChatOpenAI(temperature=.1, model_name="gpt-4-1106-preview"),
+        ChatOpenAI(temperature=.1, model_name="gpt-3.5-turbo-0125"),prompt=prompt_template,
         vectordb.as_retriever(search_kwargs={'k': 1}),
         return_source_documents=True,
         verbose=False
