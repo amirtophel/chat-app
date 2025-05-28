@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+import openai
 from query import load_documents, setup_conversational_chain
 
 # Load OpenAI API key securely
