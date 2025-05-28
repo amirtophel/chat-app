@@ -10,4 +10,3 @@ colorama==0.4.6
 tiktoken==0.7.0
 streamlit==1.24.0
 streamlit-chat==0.1.1
-pysqlite3-binary==0.5.4
