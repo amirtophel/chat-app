@@ -82,9 +82,11 @@ chat_history = []
 def query(prompt):
     global chat_history
     response = pdf_qa.invoke({"question": prompt})
+
+    # ✅ Correct way to get the text from AIMessage object
     answer = response.content if hasattr(response, "content") else str(response)
 
-    # LaTeX cleanup
+    # Clean up math formatting
     answer = re.sub(r"\[\s*([^\[\]]+?)\s*\]", r"$$\1$$", answer)
     answer = answer.replace("\\(", "$").replace("\\)", "$")
 
@@ -93,3 +95,4 @@ def query(prompt):
         chat_history = chat_history[-5:]
 
     return {"answer": answer}
+
