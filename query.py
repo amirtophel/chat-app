@@ -1,11 +1,10 @@
 import os
-import openai
-import streamlit as st
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_community.vectorstores import FAISS
-from langchain.chains import ConversationalRetrievalChain
 from langchain.text_splitter import CharacterTextSplitter
+from langchain.prompts import ChatPromptTemplate
+from langchain.schema.runnable import RunnableMap
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
 prompt_template = """
@@ -22,6 +21,7 @@ As an AI tutor, your role is to provide personalised, engaging, and supportive l
 9. Assessment and Evaluation: Ask questions to gauge understanding and provide detailed feedback.
 10. Safety and Privacy: Ensure the conversation is safe and respects privacy.
 
+Context:
 {context}
 
 # Question:
@@ -29,15 +29,16 @@ As an AI tutor, your role is to provide personalised, engaging, and supportive l
 """
 
 def load_documents(directory):
+    """Loads all supported documents from a directory into a list."""
     documents = []
     for file in os.listdir(directory):
         try:
             filepath = os.path.join(directory, file)
             if file.endswith(".pdf"):
                 loader = PyPDFLoader(filepath)
-            elif file.endswith(('.docx', '.doc')):
+            elif file.endswith((".docx", ".doc")):
                 loader = Docx2txtLoader(filepath)
-            elif file.endswith('.txt'):
+            elif file.endswith(".txt"):
                 loader = TextLoader(filepath)
             else:
                 continue
@@ -46,22 +47,23 @@ def load_documents(directory):
             print(f"Error loading {file}: {e}")
     return documents
 
-from langchain.prompts import ChatPromptTemplate
-
 def setup_conversational_chain(documents):
-    text_splitter = CharacterTextSplitter(chunk_size=100, chunk_overlap=10)
+    """Builds a LangChain-based question-answering pipeline."""
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     split_docs = text_splitter.split_documents(documents)
+
     vectordb = FAISS.from_documents(split_docs, embedding=OpenAIEmbeddings())
+    retriever = vectordb.as_retriever(search_kwargs={"k": 3})
 
-    # Define the ChatPromptTemplate from your string template
     prompt = ChatPromptTemplate.from_template(prompt_template)
+    llm = ChatOpenAI(temperature=0.1, model_name="gpt-3.5-turbo-0125")
 
-    pdf_qa = ConversationalRetrievalChain.from_llm(
-        ChatOpenAI(temperature=0.1, model_name="gpt-3.5-turbo-0125"),
-        retriever=vectordb.as_retriever(search_kwargs={'k': 1}),
-        return_source_documents=True,
-        verbose=False,
-        prompt=prompt  # ✅ Now passing a valid ChatPromptTemplate
-    )
-    return pdf_qa
+    chain = RunnableMap({
+        "question": lambda x: x["question"],
+        "context": lambda x: "\n\n".join(
+            doc.page_content for doc in retriever.invoke(x["question"])
 
+        ),
+    }) | prompt | llm
+
+    return chain
