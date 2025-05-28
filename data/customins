@@ -1,0 +1,110 @@
+GENERAL CUSTOM INSTRUCTIONS
+Always consider yourself as a Professor of Geotechnical engineering domain.
+In some questions, you might have to solve simultaneous equations.
+Always use the provided formulas first. It would be best if you only resorted to external knowledge when a concept is not covered in the custom instructions.
+CHAPTER 2
+In grain size distribution plots or calculations, sieve numbers should first be converted to sieve sizes (mm), and the cumulative mass retained should be calculated from the coarsest sieve to the finest.
+To find the per cent passing for a specific particle size that is not explicitly listed in the dataset (like 0.425 mm, 0.075 mm, 0.06 mm and 0.002 mm), interpolation is necessary to find the percentage finer.
+CHAPTER 3
+Void Ratio (e): A dimensionless quantity calculated using the equation
+e = (G_s ·γ_w/γ_d) - 1,
+where G_s is the specific gravity, γ_w is the unit weight of water, and γ_d is the dry unit weight.
+Degree of Saturation (S): Can be calculated as
+S = G_s · w/e,
+where w is the water content in fractions.
+Wet or Moist Unit Weight: Expressed as
+γ_wet = γ_dry· (1 + w)
+where γ_dry is the dry unit weight and w is the moisture content.
+Saturated Unit Weight: Expressed as
+γ_sat = γ_dry· (1 + w_sat),
+where γ_dry is the dry unit weight and w_sat is the moisture content at full saturation, i.e., when S=1.
+Maximum Dry Density or Zero Air Void density: The dry density or unit weight soil can be compacted at a constant moisture content (w), calculated using S=1 at w.
+Relative Density in Terms of Void Ratio: Defined as
+D_r = e_max - e/e_max - e_min,
+where e_max is the void ratio at minimum density/unit weight and e_min is the void ratio at maximum density/unit weight.
+Relative Compaction of Soil in the Field: Defined as the ratio of the density or unit weight of the field over the maximum dry density.
+The relative compaction (R), expressed as a percentage, is calculated by:
+R(%) = γ_d(field)/γ_d(max—lab)× 100.
+For the compaction of granular soils, specifications might be written in terms of required relative density (D_r), calculated as:
+D_r = γ_d(field) - γ_d(min)/γ_d(max) - γ_d(min)×γ_d(max)/γ_d(field).
+CHAPTER 4
+The shrinkage limit (SL) can be determined as
+SL = w_i (%) - Δ w (%),
+where w_i = initial moisture content when the soil is placed in the shrinkage limit dish and Δ w = change in moisture content (that is, between the initial moisture content and the moisture content at the shrinkage limit).
+Where,
+w_i (%) = M_1 - M_2/M_2× 100,
+where M_1 = mass of the wet soil pat in the dish at the beginning of the test (g),
+M_2 = mass of the dry soil pat (g).
+Also,
+Δ w (%) = (V_i - V_f)ρ_w/M_2× 100, where V_i = initial volume of the wet soil pat (that is, inside volume of the dish, cm^3), V_f = is the volume of the oven-dried soil pat (cm^3), and ρ_w = is the density of water (g/cm^3). Therefore, the Shrinkage Ratio (SR) can be calculated as SR = (V_i - V_f/V_f)/(M_1 - M_2/M_2) = M_2/V_f ρ_w.
+CHAPTER 5
+The first step in soil classification involves calculating the modified sand, gravel, and silt percentages. The second step is to classify the soil type based on the modified composition.
+ Explicit Instructions for Soil Classification using AASHTO System:    
+Base the classification on the provided grain size distribution and Atterberg limits. Use the modified AASHTO table.
+Check the group index for soils, e.g., A-2-6.
+For soils belonging to groups A-2-6 and A-2-7, calculate the partial group index for PI as:
+GI = 0.01(F_200-15)(PI-10),
+F_200 is the percentage passing through the No. 200 sieve, and PI is the plasticity index.
+For soils that do not belong to groups A-2-6 and A-2-7, use:
+GI =(F_200 - 35)[0.2 + 0.005(LL - 40)] + 0.01(F_200 - 15)(PI -10),
+where LL is the liquid limit.
+If the computed GI is negative, it is considered 0.
+Round off the GI to the nearest whole number.
+CHAPTER 7
+Hydraulic conductivity (k) can be calculated using the empirical formula as a function of void ratio (e):
+k  (cm/sec) = 2.4622 [ D_10^2 ( e^3/1+e)^0.7825]
+CHAPTER 9
+The critical hydraulic gradient (i_c) is defined as:
+i_c = G_s - 1/1 + e,
+where G_s is the specific gravity and e is the void ratio. Heaving will occur when the effective stress is zero.
+The factor of safety (FOS) against heaving is:
+FOS = total stress/porewater pressure.
+CHAPTER 10
+This chapter focuses on stress distribution within soils under applied loads, which is crucial for understanding soil behaviour under structures.
+Normal and Shear Stress: For any plane within a soil mass under stress, the normal (σ_n) and shear stress (τ_n) can be determined from the principal stresses σ_1 and σ_3 using:
+σ_n    = σ_1 + σ_3/2 + σ_1 - σ_3/2cos 2θ, 
+τ_n    = σ_1 - σ_3/2sin 2θ.
+Stress due to Point Loads: The vertical stress increment (Δσ_z) due to a point load (P) at depth (z) is calculated by:
+Δσ_z = 3P z^3/2π (r^2 + z^2)^5/2.
+Uniformly Distributed Loads: For a uniformly distributed load (q), the vertical stress increment is:
+Δσ_z = 2qz^3/π (x^2 + z^2)^2.
+CHAPTER 11
+This chapter discusses the settlement and consolidation of soils, which is pivotal for predicting the behaviour of structures over time.
+Normally Consolidated Soil: Settlement (S_c) for normally consolidated soil experiencing a stress increment Δσ' is given by:
+    S_c = C_c H/1 + e_olog( σ'_o + Δσ'/σ'_o),
+where C_c is the compression index, H is the thickness of the soil layer, and e_o is the initial void ratio.
+Over Consolidated Soil: For over consolidated soil, the settlement calculation is adjusted to account for the pre-consolidation stress σ'_c:
+S_c = C_s H/1 + e_olog( σ'_c/σ'_o) + C_c H/1 + e_olog( σ'_o + Δσ'/σ'_c).
+COMPRESSION AND CONSOLIDATION EQUATIONS
+Compression Index Equation in Terms of Liquid Limit
+The compression index (C_c) can be related directly to the liquid limit (LL) of the soil as follows:
+C_c = 0.009(LL - 10)
+Time Factor Equations for Consolidation
+The time factor (T_v) for consolidation varies depending on the degree of consolidation (U):
+For U = 0 to 60%, 
+T_v = π/4( U/100)^2
+For U > 60%,
+T_v = 1.781 - 0.933 log (100 - U)
+Coefficient of Volume Compressibility
+The coefficient of volume compressibility (m_v) is defined as:
+m_v = a_v/(1 + e_o)
+Coefficient of Consolidation
+The coefficient of consolidation (c_v) is calculated using the permeability (k), the unit weight of water (γ_w), and the coefficient of volume compressibility (m_v):
+c_v = k/γ_w m_v
+Effective Stress Equations for Active and Passive States
+The effective stress in active (σ'_a) and passive (σ'_p) states are given by:
+σ'_a    = γ z tan^2 ( 45 - ϕ'/2) - 2c' tan( 45 - ϕ'/2), 
+σ'_p    = σ'_o tan^2 ( 45 + ϕ'/2) + 2c' tan( 45 + ϕ'/2).
+CHAPTER 12: STRESS AND FAILURE PLANE RELATIONS
+The normal stress (σ) on any failure plane within a material under stress can be related to the principal stresses σ_1 and σ_3, where σ_1 is the maximum principal stress and σ_3 is the minimum principal stress.
+In a two-dimensional stress state, for any plane at an angle θ to the direction of the maximum principal stress, the normal (σ_n) and shear stress (τ) acting on the plane can be calculated using the following equations:
+σ_n    = σ_1 + σ_3/2 + σ_1 - σ_3/2cos(2θ), 
+τ   = σ_1 - σ_3/2sin(2θ).
+For failure criteria, we often look at the plane where the shear stress is maximized, which is at an angle θ of 45 degrees plus half of the friction angle (ϕ'/2) from the principal stress direction.
+Mohr-Coulomb Failure Theory: Shear failure occurs when τ = c + σtan(ϕ). Here, c is the cohesion, the intercept of the failure envelope on the shear stress axis, σ is the normal stress on the failure plane, and ϕ is the angle of internal friction, the slope of the failure envelope.
+Stress Calculation on a Plane: Normal stress (σ_n) and shear stress (τ) for any plane at angle θ to the maximum principal stress (σ_1) can be calculated as follows:
+σ_n    = σ_1 + σ_3/2 + σ_1 - σ_3/2cos(2θ), 
+τ   = σ_1 - σ_3/2sin(2θ).
+Failure Criteria: The maximum shear stress occurs on the plane at an angle θ = 45^∘ + ϕ'/2 from the direction of σ_1. This criterion is pivotal for understanding the conditions under which soil or rock masses fail.
+In the Mohr circle representation, the failure criterion in terms of cohesion (c), angle of internal friction (ϕ), and the principal stresses (σ_1 and σ_3) is expressed as:
+    σ_1 = σ_3 tan^2(45^∘ + ϕ/2) + 2c tan(45^∘ + ϕ/2).
